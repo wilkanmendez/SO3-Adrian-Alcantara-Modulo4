@@ -23,14 +23,18 @@ Acepta los valores por defecto.
 # Edita:
 sudo nano /etc/cups/cupsd.conf
 # Busca y cambia:
-Listen 631
-Port 631
+Listen 192.168.100.25:631
+
 <Location />
   Allow all
 </Location>
 
 # Luego:
 sudo systemctl restart cups
+
+#agrega el puerto al firewall
+sudo firewall-cmd --add-port=631/tcp --permanent
+sudo firewall-cmd --reload
 
 # Paso 5: Conectarte desde el PC cliente
 # En Windows:
