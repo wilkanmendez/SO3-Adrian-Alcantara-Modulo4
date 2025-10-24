@@ -35,11 +35,8 @@ sudo nano /var/www/html/hola/index.html
 sudo nano /etc/httpd/conf.d/hola.conf
 # Agrega:
 <VirtualHost *:80>
-    ServerAdmin webmaster@wmendez
+    ServerAdmin wmendez@localhost
     DocumentRoot /var/www/html/hola
-    ServerName hola.local
-    ErrorLog /var/log/httpd/hola-error.log
-    CustomLog /var/log/httpd/hola-access.log combined
 </VirtualHost>
 # Guarda, luego:
 sudo systemctl restart httpd
@@ -74,11 +71,8 @@ sudo nano /var/www/html/datos/index.html
 sudo nano /etc/httpd/conf.d/datos.conf
 # Agrega:
 <VirtualHost *:8080>
-    ServerAdmin webmaster@wmendez
+    ServerAdmin wmendez@localhost
     DocumentRoot /var/www/html/datos
-    ServerName datos.local
-    ErrorLog /var/log/httpd/datos-error.log
-    CustomLog /var/log/httpd/datos-access.log combined
 </VirtualHost>
 
 # Agregar el puerto 8080 al firewall
