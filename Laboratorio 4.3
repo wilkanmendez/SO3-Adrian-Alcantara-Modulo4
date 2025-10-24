@@ -1,0 +1,42 @@
+# Práctica 3: Servidor de Impresión CUPS (1 punto)
+
+# Paso 1: Instalar CUPS y habilitarlo
+sudo dnf install cups cups-pdf -y
+sudo systemctl enable --now cups
+# Verifica:
+sudo systemctl status cups
+
+# Paso 2: Acceder a la interfaz web
+# Abre el navegador y entra a:
+http://<ip-del-servidor>:631
+
+# Paso 3: Instalar la impresora virtual (PDF)
+Si no aparece automáticamente, agrégala desde la interfaz web:
+Administration → Add Printer
+Elige Virtual PDF Printer
+Dale un nombre, ej. PDF_Printer
+Acepta los valores por defecto.
+# La impresora guardará los PDFs en:
+/var/spool/cups-pdf/usuario/
+
+# Paso 4: Permitir acceso desde el cliente
+# Edita:
+sudo nano /etc/cups/cupsd.conf
+# Busca y cambia:
+Listen 631
+Port 631
+<Location />
+  Allow all
+</Location>
+
+# Luego:
+sudo systemctl restart cups
+
+# Paso 5: Conectarte desde el PC cliente
+# En Windows:
+Panel de Control → Impresoras → Agregar impresora por dirección IP
+Tipo: Internet / HTTP
+URL: http://<ip-del-servidor>:631/printers/PDF_Printer
+
+# Luego imprime un documento Word de prueba.
+# El archivo generado aparecerá en la carpeta /var/spool/cups-pdf/<usuario>/ del servidor.
