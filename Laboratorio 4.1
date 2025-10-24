@@ -7,6 +7,12 @@ sudo systemctl enable --now httpd
 # Verifica:
 sudo systemctl status httpd
 
+# Verificamos si esta el servicio httpd en el firewall
+sudo firewall-cmd --list-all
+# Agregamos el servicio
+sudo firewall-cmd --add-service-http --permanent
+sudo firewall-cmd --reload
+
 # sudo mkdir -p /var/www/html/hola
 echo "<h1>Hola Mundo</h1>" | sudo tee /var/www/html/hola/index.html
 
@@ -40,12 +46,17 @@ sudo nano /etc/httpd/conf.d/datos.conf
 # Agrega:
 Listen 8080
 <VirtualHost *:8080>
-    ServerAdmin admin@localhost
+    ServerAdmin webmaster@wmendez
     DocumentRoot /var/www/html/datos
     ServerName datos.local
     ErrorLog /var/log/httpd/datos-error.log
     CustomLog /var/log/httpd/datos-access.log combined
 </VirtualHost>
+
+# Agregar el puerto 8080 al firewall
+sudo firewall-cmd --ad-port=8080/tcp --permanent
+sudo firewall-cmd --reload
+sudo firewall-cmd --list-all
 
 # Reinicia el servicio:
 sudo systemctl restart httpd
