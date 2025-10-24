@@ -10,7 +10,7 @@ sudo systemctl status httpd
 # Verificamos si esta el servicio httpd en el firewall
 sudo firewall-cmd --list-all
 # Agregamos el servicio
-sudo firewall-cmd --add-service-http --permanent
+sudo firewall-cmd --add-service=http --permanent
 sudo firewall-cmd --reload
 
 # sudo mkdir -p /var/www/html/hola
@@ -38,7 +38,22 @@ http://<ip-del-servidor>
 # Paso 4: Crear website con tu nombre, matrícula y materia
 # Ejemplo:
 sudo mkdir -p /var/www/html/datos
-echo "<h1>Nombre: WIlkan Méndez</h1><h2>Matrícula: 20221938</h2><h3>Materia: Sistemas Operativos 3</h3>" | sudo tee /var/www/html/datos/index.html
+sudo nano /var/www/html/datos/index.html
+
+# Pega esto
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Personales</title>
+</head>
+<body>
+    <h1>Wilkan Jerez Mendez</h1>
+    <h1>2022-1938</h1>
+    <h1>Sistemas Operativos 3</h1>
+</body>
+</html>
 
 # Paso 5: Crear el VirtualHost en el puerto 8080
 # Edita:
