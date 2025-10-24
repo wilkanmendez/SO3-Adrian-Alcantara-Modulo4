@@ -1,0 +1,30 @@
+# Práctica 2: Servidor de Correo (Postfix) (2 puntos)
+
+# Paso 1: Instalar Postfix y utilidades
+sudo dnf install postfix mailx -y
+sudo systemctl enable --now postfix
+# Verifica:
+sudo systemctl status postfix
+
+# Paso 2: Configurar Postfix para salida directa
+# Edita el archivo principal:
+sudo nano /etc/postfix/main.cf
+# Asegúrate de que existan las siguientes líneas:
+myhostname = servidor.red.local
+myorigin = /etc/mailname
+mydestination = $myhostname, localhost.localdomain, localhost
+inet_interfaces = all
+inet_protocols = all
+relayhost =
+# Guarda y reinicia:
+sudo systemctl restart postfix
+
+# Paso 3: Enviar el correo de prueba
+# Comando:
+echo "Nombre: Wilkan Méndez
+Matrícula: 20221938" | mail -s "MambruSeFueALaGuerra" os3conadrian@gmail.com
+
+# Verifica el envío:
+sudo tail -f /var/log/maillog
+
+# Si todo está correcto, el profesor debe recibir el correo con ese asunto y tu información.
