@@ -1,0 +1,54 @@
+# Práctica 1: Servidor HTTP Apache2 / Nginx (1 punto)
+
+# Paso 1: Instalar Apache
+sudo dnf install httpd -y
+sudo systemctl enable --now httpd
+
+# Verifica:
+sudo systemctl status httpd
+
+# sudo mkdir -p /var/www/html/hola
+echo "<h1>Hola Mundo</h1>" | sudo tee /var/www/html/hola/index.html
+
+# Paso 3: Crear el VirtualHost que escuche en el puerto 80
+# Edita el archivo:
+sudo nano /etc/httpd/conf.d/hola.conf
+# Agrega:
+<VirtualHost *:80>
+    ServerAdmin admin@localhost
+    DocumentRoot /var/www/html/hola
+    ServerName hola.local
+    ErrorLog /var/log/httpd/hola-error.log
+    CustomLog /var/log/httpd/hola-access.log combined
+</VirtualHost>
+# Guarda, luego:
+sudo systemctl restart httpd
+
+# Desde el navegador o cliente:
+http://<ip-del-servidor>
+# Deberías ver:
+# Hola Mundo
+
+# Paso 4: Crear website con tu nombre, matrícula y materia
+# Ejemplo:
+sudo mkdir -p /var/www/html/datos
+echo "<h1>Nombre: WIlkan Méndez</h1><h2>Matrícula: 20221938</h2><h3>Materia: Sistemas Operativos 3</h3>" | sudo tee /var/www/html/datos/index.html
+
+# Paso 5: Crear el VirtualHost en el puerto 8080
+# Edita:
+sudo nano /etc/httpd/conf.d/datos.conf
+# Agrega:
+Listen 8080
+<VirtualHost *:8080>
+    ServerAdmin admin@localhost
+    DocumentRoot /var/www/html/datos
+    ServerName datos.local
+    ErrorLog /var/log/httpd/datos-error.log
+    CustomLog /var/log/httpd/datos-access.log combined
+</VirtualHost>
+
+# Reinicia el servicio:
+sudo systemctl restart httpd
+
+# Desde el navegador:
+http://<ip-del-servidor>:8080
