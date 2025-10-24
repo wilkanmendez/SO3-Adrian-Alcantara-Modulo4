@@ -13,8 +13,22 @@ sudo firewall-cmd --list-all
 sudo firewall-cmd --add-service=http --permanent
 sudo firewall-cmd --reload
 
-# sudo mkdir -p /var/www/html/hola
-echo "<h1>Hola Mundo</h1>" | sudo tee /var/www/html/hola/index.html
+# Crear la carpeta
+sudo mkdir -p /var/www/html/hola
+# Editar el archivo index.html
+sudo nano /var/www/html/hola/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Personales</title>
+</head>
+<body>
+    <h1>Hola Mundo</h1>
+</body>
+</html>
 
 # Paso 3: Crear el VirtualHost que escuche en el puerto 80
 # Edita el archivo:
@@ -59,7 +73,6 @@ sudo nano /var/www/html/datos/index.html
 # Edita:
 sudo nano /etc/httpd/conf.d/datos.conf
 # Agrega:
-Listen 8080
 <VirtualHost *:8080>
     ServerAdmin webmaster@wmendez
     DocumentRoot /var/www/html/datos
